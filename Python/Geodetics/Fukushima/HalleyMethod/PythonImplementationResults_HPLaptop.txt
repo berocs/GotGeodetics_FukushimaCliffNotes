@@ -1,0 +1,240 @@
+python3
+Python 3.9.16 (main, Mar  8 2023, 22:47:22)
+[GCC 11.3.0] on cygwin
+Type "help", "copyright", "credits" or "license" for more information.
+>>> import testConvertEcefToGeodetic
+
+
+
+
+======================================================================
+|
+|  PURPOSE:
+|
+|    This program will test the conversion of Earth-Centered Earth-
+|    Fixed (ECEF) retangular coordinates to geodetic coordinates
+|    for a specified reference ellipsoid.
+|
+|---------------------------------------------------------------------
+|
+|  METHOD:
+|
+|    [ 1 ] Uses the economic third-order Halley's method to
+|          approximate a solution for the general non-linear
+|          geodetic equation numerically.
+|
+|    [ 2 ] Uses only one iteration of the iterative Halley's
+|          method.
+|
+|    [ 3 ] Uses a technique to avoid division operations which
+|          significantly accelerates the backward transformation
+|          without degrading the precision.
+|
+|---------------------------------------------------------------------
+|
+|  STRATEGY:
+|
+|    [ 1 ]  Define true geodetic latitude and altitude
+|           values along the 45-degree East geocentric
+|           longitude meridian.
+|
+|    [ 2 ]  Generate true rectangular values based on the
+|           true geodetic latitude, true geodetic altitude
+|           and constant geocentric longitude' values.
+|
+|    [ 3 ]  Compute estimated geodetic values based on the
+|           true rectangular values.
+|
+|    [ 4 ]  Report the differences between the defined true
+|           geodetic values and the estimated geodetic
+|           values.
+|
+|---------------------------------------------------------------------
+|
+|  AUTHOR(s):
+|
+|    [ 1 ]  Toshio Fukushima <Toshio.Fukushima@nao.ac.jp>
+|           National Astronomical Observatory of Japan (NAOJ)
+|           Address:  2-21-1, Ohsawa, Mitaka, Tokyo   181-8588,  Japan
+|           Phone:    +81-422-34-3613
+|
+|---------------------------------------------------------------------
+|
+|  REFERENCE(s):
+|
+|    [ 1 ]  'Transformation from Cartesian to geodetic
+|            coordinates accelerated by Halley's method',
+|           Toshio Fukushima,
+|           Journal Of Geodesy (2006),
+|           Volume 79,
+|           Pages 689-693
+|
+|    [ 2 ]  'Fast transform from geocentric to geodetic coordinates',
+|           Toshio Fukushima,
+|           Journal Of Geodesy (1999),
+|           Volume 73,
+|           Pages 603–610
+|
+|    [ 3 ]  'Geometric Geodesy, Part A',
+|           'A set of lecture notes which are an introduction to
+|            ellipsoidal geometry related to geodesy.',
+|            R. E. Deakin and M. N. Hunter,
+|            School of Mathematical and Geospatial Sciences,
+|            RMIT University,
+|            Melbourne, Australia,
+|            January 2013
+|            www.mygeodesy.id.au/documents/Geometric%20Geodesy%20A
+|            (2013).pdf
+|
+|    [ 4 ]  'Various parameterizations of latitude equation -
+|            Cartesian to geodetic coordinates transformation',
+|            Marcin Ligas,
+|            Journal of Geodetic Science,
+|            Pages 87 - 94,
+|            2013
+|
+|    [ 5 ]  'In numerical analysis, Halley's method is a root-
+|            finding algorithm used for functions of one real
+|            variable with a continuous second derivative.',
+|           'The rate of convergence of the iterative Halley's
+|            method is cubic.',
+|           'There exist multidimensional versions of Halley's
+|            method.',
+|           wikipedia.org/wiki/Halley's_method
+|
+======================================================================
+
+
+
+
+
+
+
+
+========================================================================================
+|
+| EARTH-CENTERED EARTH-FIXED (ECEF) RECTANGULAR COORDINATES
+| TO GEODETIC CONVERSIONS USING THIRD ORDER HALLEY'S ITERATIVE METHOD
+| ONLY ONE HALLEY's ITERATION IS USED TO ACHIEVE FULL
+| DOUBLE PRECISION ACCURACY.
+|
+|---------------------------------------------------------------------------------------
+|
+| True Geocentric East Longitude:-->+45.000000  [degrees]
+|
+|=======================================================================================
+|                   |                  |    GEODETIC CONVERSION ERROR RESULTS
+|                   |                  |-----------------------------------------
+|  True             |  True            |  Delta             |   Delta
+|  Geodetic         |  Geodetic        |  Geodetic          |   Geodetic
+|  Latitude         |  Altitude        |  Latitude          |   Altitude
+|-------------------+------------------+--------------------+--------------------
+|  [degrees]        |  [meters]        |  [microArcSeconds] |   [nanoMeters]
+--------------------+------------------+--------------------+--------------------
+      +0.0000000010       -10000.00000   +0.0000000000e+00    +6.1299942899e-01
+      +0.0000000010     +1000000.00000   -6.6647753430e-16    +3.4924596548e-01
+      +0.0000000010     +2000000.00000   +0.0000000000e+00    -4.6566128731e-01
+      +0.0000000010     +3000000.00000   +0.0000000000e+00    +9.3132257462e-01
+      +0.0000000010       -10000.00000   +0.0000000000e+00    +6.1299942899e-01
+      +0.0000000010     +1000000.00000   -6.6647753430e-16    +3.4924596548e-01
+      +0.0000000010     +2000000.00000   +0.0000000000e+00    -4.6566128731e-01
+      +0.0000000010     +3000000.00000   +0.0000000000e+00    +9.3132257462e-01
+     +15.0000000000       -10000.00000   +1.1449996853e-05    -1.1405063560e+00
+     +15.0000000000     +1000000.00000   +4.7173987035e-03    -5.8207660913e-01
+     +15.0000000000     +2000000.00000   +2.2705343760e-02    +6.9849193096e-01
+     +15.0000000000     +3000000.00000   +4.8754086601e-02    +0.0000000000e+00
+     +30.0000000000       -10000.00000   +2.2899993707e-05    +4.8385118134e-01
+     +30.0000000000     +1000000.00000   -9.2515974574e-03    +9.3132257462e-01
+     +30.0000000000     +2000000.00000   -4.4380187803e-02    +2.3283064365e-01
+     +30.0000000000     +3000000.00000   -9.5401373781e-02    +9.3132257462e-01
+     +45.0000000000       -10000.00000   +0.0000000000e+00    +8.8584783953e-01
+     +45.0000000000     +1000000.00000   -8.5004776639e-02    +6.9849193096e-01
+     +45.0000000000     +2000000.00000   -4.0890228762e-01    +0.0000000000e+00
+     +45.0000000000     +3000000.00000   -8.7855825855e-01    -4.6566128731e-01
+     +60.0000000000       -10000.00000   +0.0000000000e+00    -7.4578565545e-01
+     +60.0000000000     +1000000.00000   -1.0117217220e-01    -6.9849193096e-01
+     +60.0000000000     +2000000.00000   -4.8630426635e-01    -9.3132257462e-01
+     +60.0000000000     +3000000.00000   -1.0446061129e+00    +4.6566128731e-01
+     +75.0000000000       -10000.00000   +0.0000000000e+00    -2.5174813345e+00
+     +75.0000000000     +1000000.00000   -2.5968592863e-02    -2.3283064365e+00
+     +75.0000000000     +2000000.00000   -1.2462176575e-01    -1.3969838619e+00
+     +75.0000000000     +3000000.00000   -2.6760932645e-01    -4.6566128731e-01
+     +89.9999999990       -10000.00000   +0.0000000000e+00    +8.7311491370e-02
+     +89.9999999990     +1000000.00000   +0.0000000000e+00    -1.1641532183e-01
+     +89.9999999990     +2000000.00000   +0.0000000000e+00    -2.3283064365e-01
+     +89.9999999990     +3000000.00000   +0.0000000000e+00    -1.3969838619e+00
+========================================================================================
+
+
+
+
+========================================================================================
+|
+| TIMING RESULTS FOR CURRENT TRIAL:
+|
+|   Cumulative execution time over all
+|      'convertEcefToGeodetic' function calls:-->  +7297.04 [microseconds]
+|
+|=======================================================================================
+|
+| COORDINATE CONVERSION TIMING:
+|
+| COORDINATE CONVERSION TIMING MEASUREMENTS OCCUR OVER A TRIAL
+|
+| A TRIAL OCCURS OVER A SPECIFIED TRUE GEOCENTRIC
+| LONGITUDE (ie. ON A SPECIFIED GEOCENTRIC MEDIDIAN)
+|
+| A TRIAL CONSISTS OF:
+|
+|   Performing the following 32 ECEF rectangular
+|   X, Y, Z coordinates to geodetic latitude and
+|   altitude conversions.
+|
+|     [ 1 ]  Converting ECEF rectangular X, Y, Z coordinates
+|            at each 15 degrees of true geodetic latitude
+|            along the specified true East longitude meridian
+|            from the equator to the north pole.
+|
+|     [ 2 ]  At each true geodetic latitude,
+|            perform seperate geodetic coordinate conversions
+|            at each of four specified true geodetic altitudes.
+|
+|   Report the sum of the execution times over each of
+|   the coordinate conversion function calls involved in
+|   the 32 ECEF rectangular coorindates conversions to
+|   geodetic coordinates.
+|
+========================================================================================
+
+
+========================================================================================
+|
+| COMPUTER INFORMATION:
+|
+|   CPU Name:                    "Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz"
+|   L2 Cache Size:                1048576 [bytes]
+|   L3 Cache Size:                8388608 [bytes]
+|   Total Memory Size:            34196918272 [bytes]
+|   Number CPUs:                  1
+|   Total Number Of Cores:        4
+|   Operating System Type:       "Windows"
+|   Operating System Version:    "Microsoft Windows 10 Pro"
+|   Host Name:                   "LAPTOP-1F1B63HF"
+|
+========================================================================================
+
+
+========================================================================================
+|
+|  MAXIMUM ABSOLUTE ERRORS OVER ONE TRIAL:
+|
+|    Maximum geodetic north latitude absolute error
+|      is:-->       1.044606 [microarcseconds]
+|
+|    Maximum geodetic altitude absolute error
+|      is:-->       2.517481 [nanometers]
+|
+========================================================================================
+
+
+
