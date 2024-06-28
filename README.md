@@ -1,9 +1,9 @@
 # GotGeodetics Fukushima CliffNotes
 Notes to aid reading the reference papers of Dr. Toshio Fukushima for conversion of geocentric rectangular coordinates to geodetic coordinates.
 
-Example implementations and performance tests in C/C++, Fortran, Python and Julia.
+Example implementations and performance test results of the 2006 Fukushima algorithm using each of C/C++, Fortran, Python and Julia.
 
-Performance For C / C++ Example:
+Performance Results For C / C++ Implementation:
 
     CPU:     "Intel(R) Core(TM) i7-8550U CPU @ 1.80GHz“
 
